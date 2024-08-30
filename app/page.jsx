@@ -1,5 +1,6 @@
 // import React from 'react'
 // We dont need to import this in NextJS
+import Feed from "@components/Feed"
 
 const Home = () => {
   return (
@@ -13,7 +14,7 @@ const Home = () => {
         PromptLand is an open-source AI tool designed for the modern world,
         enabling users to discover, create, and share imaginative prompts
         </p>
-        {/* Feed */}
+        <Feed/> 
     </section>
   )
 }
