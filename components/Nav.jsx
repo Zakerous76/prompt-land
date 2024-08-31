@@ -5,13 +5,27 @@ import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const Nav = () => {
-  const { data: session } = useSession();
+  // for the current user
+  const { data: session, status } = useSession();
+  const [renderCounter, setRenderCounter] = useState(1);
+
+  useEffect(() => {
+    setRenderCounter((prevCounter) => prevCounter + 1);
+    console.log(`Render count: ${renderCounter}`);
+    console.log(`Session status: ${status}`);
+    if (status === "loading") {
+      console.log("Session is still loading...");
+    } else {
+      console.log("No session found or session is not authenticated");
+    }
+  }, [session, status]);
 
   const [providers, setProviders] = useState(0);
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
   useEffect(() => {
     const fetchAndSetProviders = async () => {
+      // gets the configured providers from next-auth route.js
       const response = await getProviders();
       setProviders(response);
     };
@@ -23,6 +37,7 @@ const Nav = () => {
       className="flex-between w-full mb-16 mt-1
     pt-3"
     >
+      {/* The Logo and homepage link */}
       <Link href="/" className="flex gap-2 flex-center">
         <Image
           src="/assets/images/logo.svg"
@@ -37,6 +52,7 @@ const Nav = () => {
       {/* Desktop Navigation */}
       <div className="sm:flex hidden">
         {session?.user ? (
+          // If user signed is in
           <div className="flex gap-3 md:gap-5 ">
             <Link href="/create-prompt" className="black_btn">
               Create Post
@@ -75,6 +91,7 @@ const Nav = () => {
       <div className="sm:hidden flex relative">
         {session?.user ? (
           <div className="flex">
+            {/* The menu, 3 horizontal lines, icon */}
             <Image
               className="rounded-full"
               alt="profile"
@@ -99,8 +116,7 @@ const Nav = () => {
                 >
                   Create Prompt
                 </Link>
-                <button
-                  type="button"
+                <Link
                   onClick={() => {
                     setToggleDropdown(false);
                     signOut();
@@ -108,7 +124,7 @@ const Nav = () => {
                   className="mt-5 w-full black_btn"
                 >
                   Sign Out
-                </button>
+                </Link>
               </div>
             )}
           </div>
