@@ -62,7 +62,7 @@ const Nav = () => {
             </Link>
             <Link href="/profile">
               <Image
-                src="/assets/images/logo.svg"
+                src={session?.user.image}
                 width={37}
                 height={37}
                 className="rounded-full"
@@ -93,7 +93,7 @@ const Nav = () => {
           <div className="flex">
             {/* The menu, 3 horizontal lines, icon */}
             <Image
-              className="rounded-full"
+              className="rounded-full transition-all duration-300 hover:opacity-50"
               alt="profile"
               src="/assets/icons/menu.svg"
               width={37}
@@ -102,6 +102,15 @@ const Nav = () => {
             />
             {toggleDropdown && (
               <div className="dropdown">
+                <Link href="/profile">
+                  <Image
+                    src={session?.user.image}
+                    width={37}
+                    height={37}
+                    className="rounded-full profile_pic"
+                    alt="profile picture"
+                  />
+                </Link>
                 <Link
                   href="/profile"
                   className="dropdown_link"
@@ -116,7 +125,8 @@ const Nav = () => {
                 >
                   Create Prompt
                 </Link>
-                <Link
+                <button
+                  type="button"
                   onClick={() => {
                     setToggleDropdown(false);
                     signOut();
@@ -124,7 +134,7 @@ const Nav = () => {
                   className="mt-5 w-full black_btn"
                 >
                   Sign Out
-                </Link>
+                </button>
               </div>
             )}
           </div>
