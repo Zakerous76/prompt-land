@@ -20,7 +20,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmitting }) => {
 
           <textarea
             value={post.prompt}
-            onChange={(e) => setPost({ ...post, prompt: e.target.prompt })}
+            onChange={(e) => setPost({ ...post, prompt: e.target.value })}
             placeholder="Write your prompt here"
             required
             className="form_textarea"
@@ -33,7 +33,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmitting }) => {
 
           <textarea
             value={post.tag}
-            onChange={(e) => setPost({ ...post, tag: e.target.tag })}
+            onChange={(e) => setPost({ ...post, tag: e.target.value })}
             placeholder="#tag"
             required
             className="form_input"
@@ -42,7 +42,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmitting }) => {
         <div className="flex-end mx-3 mb-5 gap-5">
           <Link
             href="/"
-            className="text-gray-500 px-5 py-1.5  hover:font-bold transition-all"
+            className="text-gray-500 px-5 py-1.5 rounded-full border-0 hover:font-bold transition-all"
           >
             Cancel
           </Link>
