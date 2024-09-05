@@ -7,6 +7,8 @@ import { usePathname, useRouter } from "next/navigation";
 
 const PromptCard = ({ prompt, handleTagClick, handleEdit, handleDelete }) => {
   const [copied, setCopied] = useState("");
+  const { data: session } = useSession();
+
   const handleCopy = () => {
     setCopied(prompt.prompt);
     navigator.clipboard.writeText(prompt.prompt);
@@ -56,6 +58,22 @@ const PromptCard = ({ prompt, handleTagClick, handleEdit, handleDelete }) => {
         >
           {prompt.tag}
         </p>
+        {session?.user.id === prompt.creator._id && (
+          <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3">
+            <p
+              className="font-inter text-sm green_gradient cursor-pointer hover:font-black"
+              onClick={handleEdit}
+            >
+              Edit
+            </p>
+            <p
+              className="font-inter text-sm orange_gradient cursor-pointer hover:font-black"
+              onClick={handleDelete}
+            >
+              delete
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
