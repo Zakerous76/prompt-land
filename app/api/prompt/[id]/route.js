@@ -18,4 +18,5 @@ export const GET = async (request, { params }) => {
 };
 
 // PATCH (update)
+export const PATCH = (request, { params }) => {};
 // DELETE (delete)
