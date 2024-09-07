@@ -1,11 +1,14 @@
 "use client";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Profile from "@components/Profile";
 
 const MyProfile = () => {
-  const handleEdit = () => {};
+  const router = useRouter();
+  const handleEdit = (prompt) => {
+    router.push(`/update-prompt?id=${prompt._id}`);
+  };
   const handleDelete = () => {};
   const [prompts, setPrompts] = useState([]);
   const { data: session } = useSession();
