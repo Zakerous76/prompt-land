@@ -9,7 +9,9 @@ const MyProfile = () => {
   const handleEdit = (prompt) => {
     router.push(`/update-prompt?id=${prompt._id}`);
   };
-  const handleDelete = () => {};
+  const handleDelete = (prompt) => {
+    router.push(`/delete-prompt?id=${prompt._id}`);
+  };
   const [prompts, setPrompts] = useState([]);
   const { data: session } = useSession();
 
