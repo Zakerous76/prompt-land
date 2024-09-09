@@ -29,13 +29,44 @@ const EditPrompt = () => {
     }
   }, [promptId]);
 
+  const updatePrompt = async (e) => {
+    // prevent reloadıng
+    e.preventDefault();
+    // to be used as a loader later on
+    setSubmitting(true);
+
+    if (!promptId) {
+      return alert("Missing prompt ID (Prompt ID not found)");
+    }
+
+    try {
+      const response = await fetch(`/api/prompt/${promptId}`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          prompt: post.prompt,
+          tag: post.tag,
+        }),
+      });
+
+      if (response.ok) {
+        router.push("/");
+      }
+    } catch (error) {
+      console.log(error);
+      console.log(response);
+    } finally {
+      // "either way do this":
+      setSubmitting(false);
+    }
+  };
+
   return (
     <Form
       type="Edit"
       post={post}
       setPost={setPost}
       submitting={submitting}
-      handleSubmitting={() => {}}
+      handleSubmitting={updatePrompt}
     />
   );
 };
