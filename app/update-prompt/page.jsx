@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Form from "@components/Form";
 
 // remove edit and delete button from home page promptCard
+// gotta do my daily commits
 const EditPrompt = () => {
   // These state must be defined before starting to work on the Form componment
   const [post, setPost] = useState({
