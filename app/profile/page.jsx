@@ -6,12 +6,6 @@ import Profile from "@components/Profile";
 
 const MyProfile = () => {
   const router = useRouter();
-  const handleEdit = (prompt) => {
-    router.push(`/update-prompt?id=${prompt._id}`);
-  };
-  const handleDelete = (prompt) => {
-    router.push(`/delete-prompt?id=${prompt._id}`);
-  };
   const [prompts, setPrompts] = useState([]);
   const { data: session } = useSession();
 
@@ -26,6 +20,26 @@ const MyProfile = () => {
       fetchPrompts();
     }
   }, []);
+
+  const handleEdit = (prompt) => {
+    router.push(`/update-prompt?id=${prompt._id}`);
+  };
+
+  const handleDelete = async (prompt) => {
+    const hasConfirmed = confirm("Are you sure you want to delete");
+    if (hasConfirmed) {
+      try {
+        const myPrompts = await fetch(`/api/prompt/${prompt._id.toString()}`, {
+          method: "DELETE",
+        });
+
+        const filteredPrompts = prompts.filter((p) => p._id !== prompt._id);
+        setPrompts(filteredPrompts);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   return (
     <Profile
