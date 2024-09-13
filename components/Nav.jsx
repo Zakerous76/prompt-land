@@ -9,16 +9,16 @@ const Nav = () => {
   const { data: session, status } = useSession();
   const [renderCounter, setRenderCounter] = useState(1);
 
-  useEffect(() => {
-    setRenderCounter((prevCounter) => prevCounter + 1);
-    console.log(`Render count: ${renderCounter}`);
-    console.log(`Session status: ${status}`);
-    if (status === "loading") {
-      console.log("Session is still loading...");
-    } else {
-      console.log("No session found or session is not authenticated");
-    }
-  }, [session, status]);
+  // useEffect(() => {
+  //   setRenderCounter((prevCounter) => prevCounter + 1);
+  //   console.log(`Render count: ${renderCounter}`);
+  //   console.log(`Session status: ${status}`);
+  //   if (status === "loading") {
+  //     console.log("Session is still loading...");
+  //   } else {
+  //     console.log("No session found or session is not authenticated");
+  //   }
+  // }, [session, status]);
 
   const [providers, setProviders] = useState(0);
   const [toggleDropdown, setToggleDropdown] = useState(false);
