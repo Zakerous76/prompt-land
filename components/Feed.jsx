@@ -10,7 +10,6 @@ import PromptCard from "./PromptCard";
 const PromptCardList = ({ data, handleTagClick }) => {
   return (
     <div className="mt-16 prompt_layout">
-      {console.log("data: ", data)}
       {data.map((prompt) => (
         <PromptCard
           key={prompt._id}
@@ -24,9 +23,34 @@ const PromptCardList = ({ data, handleTagClick }) => {
 
 const Feed = () => {
   const [searchText, setSearchText] = useState("");
-  const handleSearchChange = (e) => {};
-
+  const [searchPrompts, setSearchPrompts] = useState([]);
+  const [displayPrompts, setDisplayPrompts] = useState([]);
   const [prompts, setPrompts] = useState([]);
+
+  // Implement here
+  const handleSearchChange = async (e) => {
+    const value = e.target.value;
+    setSearchText(value);
+    console.log("search: ", searchText);
+
+    if (value === "") {
+      setSearchPrompts([]);
+      setDisplayPrompts(prompts);
+    } else {
+      const filteredPrompts = prompts.filter(
+        (element) =>
+          element.prompt.toLowerCase().includes(value.toLowerCase()) ||
+          element.tag.toLowerCase().includes(value.toLowerCase()) ||
+          element.creator.username.toLowerCase().includes(value.toLowerCase())
+      );
+      setSearchPrompts(filteredPrompts);
+    }
+  };
+
+  useEffect(() => {
+    setDisplayPrompts(searchText.length > 0 ? searchPrompts : prompts);
+  }, [searchPrompts, prompts]);
+
   useEffect(() => {
     const fetchPrompts = async () => {
       try {
@@ -36,18 +60,14 @@ const Feed = () => {
         }
         const data = await response.json();
         setPrompts(data);
-        console.log("Fetched Prompts: ", data); // Log the fetched data
+        setDisplayPrompts(data);
+        console;
       } catch (error) {
         console.error("Failed to fetch prompts:", error);
       }
     };
     fetchPrompts();
   }, []);
-
-  // To log updated prompts
-  useEffect(() => {
-    console.log("Updated Prompts: ", prompts); // Log the updated prompts
-  }, [prompts]);
 
   return (
     <section className="feed">
@@ -62,7 +82,7 @@ const Feed = () => {
         />
       </form>
 
-      <PromptCardList data={prompts} handleTagClick={() => {}} />
+      <PromptCardList data={displayPrompts} handleTagClick={() => {}} />
     </section>
   );
 };
