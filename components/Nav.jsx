@@ -129,7 +129,11 @@ const Nav = () => {
                   type="button"
                   onClick={() => {
                     setToggleDropdown(false);
-                    signOut();
+                    signOut({
+                      callbackUrl: "http://localhost:3000/",
+                      redirect: false,
+                    });
+                    // A commit
                   }}
                   className="mt-5 w-full black_btn"
                 >
