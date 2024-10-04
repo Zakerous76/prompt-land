@@ -22,6 +22,7 @@ const nextConfig = {
   // expoerimental features in Next.js
   experimental: {
     serverComponentsExternalPackages: ["mongoose"],
+    missingSuspenseWithCSRBailout: false,
   },
 
   // customize webpack custmization
