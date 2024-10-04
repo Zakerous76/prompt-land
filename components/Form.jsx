@@ -28,13 +28,13 @@ const Form = ({ type, post, setPost, submitting, handleSubmitting }) => {
         </label>
         <label>
           <span className="font-satoshi font-semibold text-base text-gray-700">
-            Tag <span className="font-normal">(#product #webdev #meme)</span>
+            Tag <span className="font-normal"></span>
           </span>
 
           <textarea
             value={post.tag}
             onChange={(e) => setPost({ ...post, tag: e.target.value })}
-            placeholder="#tag"
+            placeholder="tag"
             required
             className="form_input"
           />
