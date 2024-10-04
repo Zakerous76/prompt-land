@@ -22,52 +22,55 @@ const PromptCardList = ({ data, handleTagClick }) => {
 };
 
 const Feed = () => {
+  const [allPrompts, setAllPrompts] = useState([]);
+
+  // Search states
   const [searchText, setSearchText] = useState("");
-  const [searchPrompts, setSearchPrompts] = useState([]);
-  const [displayPrompts, setDisplayPrompts] = useState([]);
-  const [prompts, setPrompts] = useState([]);
+  const [searchTimeout, setSearchTimeout] = useState(null);
+  const [searchedResults, setSearchedResults] = useState([]);
 
-  // Implement here
-  const handleSearchChange = async (e) => {
-    const value = e.target.value;
-    setSearchText(value);
-    console.log("search: ", searchText);
+  // Fetching all prompts
+  const fetchAllPrompts = async () => {
+    const response = await fetch("/api/prompt");
+    const data = await response.json();
+    setAllPrompts(data);
+  };
+  // call it at startup
+  useEffect(() => {
+    fetchAllPrompts();
+  }, []);
 
-    if (value === "") {
-      setSearchPrompts([]);
-      setDisplayPrompts(prompts);
-    } else {
-      const filteredPrompts = prompts.filter(
-        (element) =>
-          element.prompt.toLowerCase().includes(value.toLowerCase()) ||
-          element.tag.toLowerCase().includes(value.toLowerCase()) ||
-          element.creator.username.toLowerCase().includes(value.toLowerCase())
-      );
-      setSearchPrompts(filteredPrompts);
-    }
+  // filter the prompts based on the search text
+  const filterPrompts = (query) => {
+    const searchQuery = query || searchText; // use the passed query or fallback to searchText
+    const regex = new RegExp(searchQuery, "i"); // "i" to search case-insensitive
+    return allPrompts.filter(
+      (item) =>
+        regex.test(item.creator.username) ||
+        regex.test(item.tag) ||
+        regex.test(item.prompt)
+    );
   };
 
-  useEffect(() => {
-    setDisplayPrompts(searchText.length > 0 ? searchPrompts : prompts);
-  }, [searchPrompts, prompts]);
+  // handle search
+  const handleSearchChange = (e) => {
+    clearTimeout(searchTimeout);
+    setSearchText(e.target.value);
+    // debounce method
+    setSearchTimeout(
+      setTimeout(() => {
+        const searchResult = filterPrompts();
+        setSearchedResults(searchResult);
+      }, 100)
+    );
+  };
 
-  useEffect(() => {
-    const fetchPrompts = async () => {
-      try {
-        const response = await fetch("/api/prompt");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setPrompts(data);
-        setDisplayPrompts(data);
-        console;
-      } catch (error) {
-        console.error("Failed to fetch prompts:", error);
-      }
-    };
-    fetchPrompts();
-  }, []);
+  const handleTagClick = (tagName) => {
+    setSearchText(tagName);
+
+    const searchResult = filterPrompts(tagName);
+    setSearchedResults(searchResult);
+  };
 
   return (
     <section className="feed">
@@ -82,7 +85,15 @@ const Feed = () => {
         />
       </form>
 
-      <PromptCardList data={displayPrompts} handleTagClick={() => {}} />
+      {/* All Prompts */}
+      {searchText ? (
+        <PromptCardList
+          data={searchedResults}
+          handleTagClick={handleTagClick}
+        />
+      ) : (
+        <PromptCardList data={allPrompts} handleTagClick={handleTagClick} />
+      )}
     </section>
   );
 };
