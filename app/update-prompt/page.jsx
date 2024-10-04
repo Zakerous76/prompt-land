@@ -51,13 +51,16 @@ const EditPrompt = () => {
       });
 
       if (response.ok) {
-        router.push("/");
+        router.replace("/"); // Refresh the feed
+      } else {
+        // Show alert if the response status is not ok
+        const errorData = await response.json();
+        alert(`Error: ${errorData.message || "Something went wrong!"}`);
       }
     } catch (error) {
       console.log(error);
-      console.log(response);
+      alert(`Error: ${error.message || "Something went wrong!"}`);
     } finally {
-      // "either way do this":
       setSubmitting(false);
     }
   };
