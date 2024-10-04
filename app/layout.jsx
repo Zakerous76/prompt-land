@@ -1,6 +1,7 @@
 import "@styles/globals.css";
 import Nav from "@components/Nav";
 import Provider from "@components/Provider";
+import Footer from "@components/Footer";
 
 export const metadata = {
   title: "PromptLand",
@@ -10,6 +11,9 @@ export const metadata = {
 const RootLayout = ({ children }) => {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/assets/images/logo.svg" />
+      </head>
       <body>
         <Provider>
           <div className="main">
@@ -20,6 +24,7 @@ const RootLayout = ({ children }) => {
             <Nav />
             {children}
           </main>
+          <Footer />
         </Provider>
       </body>
     </html>
