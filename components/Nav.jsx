@@ -7,6 +7,7 @@ import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 const Nav = () => {
   // for the current user
   const { data: session, status } = useSession();
+  console.log("use session nav:", session);
   const [renderCounter, setRenderCounter] = useState(1);
 
   // useEffect(() => {
@@ -57,7 +58,18 @@ const Nav = () => {
             <Link href="/create-prompt" className="black_btn">
               Create Post
             </Link>
-            <Link onClick={signOut} href="/sign_out" className="outline_btn">
+            <Link
+              href="/"
+              onClick={() => {
+                setToggleDropdown(false);
+                signOut({
+                  callbackUrl: "http://localhost:3000/",
+                  redirect: true,
+                });
+                // A commit
+              }}
+              className="outline_btn"
+            >
               Sign Out
             </Link>
             <Link href="/profile">
@@ -131,7 +143,7 @@ const Nav = () => {
                     setToggleDropdown(false);
                     signOut({
                       callbackUrl: "http://localhost:3000/",
-                      redirect: false,
+                      redirect: true,
                     });
                     // A commit
                   }}
