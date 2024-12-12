@@ -13,7 +13,8 @@ const Home = () => {
       </h1>
       <p className="desc text-center">
         PromptLand is an open-source AI tool designed for the modern world,
-        enabling users to discover, create, and share imaginative prompts
+        enabling users to discover, create, and share imaginative prompts. Let's
+        Go!!!
       </p>
       <Feed />
     </section>
