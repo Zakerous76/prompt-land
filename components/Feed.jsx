@@ -1,6 +1,6 @@
-"use client";
-import { useEffect, useState } from "react";
-import PromptCard from "./PromptCard";
+"use client"
+import { useEffect, useState } from "react"
+import PromptCard from "./PromptCard"
 
 // search bar
 // get prompts
@@ -18,59 +18,77 @@ const PromptCardList = ({ data, handleTagClick }) => {
         ></PromptCard>
       ))}
     </div>
-  );
-};
+  )
+}
 
 const Feed = () => {
-  const [allPrompts, setAllPrompts] = useState([]);
+  const [allPrompts, setAllPrompts] = useState([])
 
   // Search states
-  const [searchText, setSearchText] = useState("");
-  const [searchTimeout, setSearchTimeout] = useState(null);
-  const [searchedResults, setSearchedResults] = useState([]);
+  const [searchText, setSearchText] = useState("")
+  const [searchTimeout, setSearchTimeout] = useState(null)
+  const [searchedResults, setSearchedResults] = useState([])
+
+  const shuffle = (array) => {
+    let currentIndex = array.length
+
+    // While there remain elements to shuffle...
+    while (currentIndex != 0) {
+      // Pick a remaining element...
+      let randomIndex = Math.floor(Math.random() * currentIndex)
+      currentIndex--
+
+      // And swap it with the current element.
+      ;[array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ]
+    }
+  }
 
   // Fetching all prompts
   const fetchAllPrompts = async () => {
-    const response = await fetch("/api/prompt");
-    const data = await response.json();
-    setAllPrompts(data);
-  };
+    const response = await fetch("/api/prompt")
+    const data = await response.json()
+    shuffle(data)
+    setAllPrompts(data)
+  }
   // call it at startup
   useEffect(() => {
-    fetchAllPrompts();
-  }, []);
+    fetchAllPrompts()
+  }, [])
 
   // filter the prompts based on the search text
   const filterPrompts = (query) => {
-    const searchQuery = query || searchText; // use the passed query or fallback to searchText
-    const regex = new RegExp(searchQuery, "i"); // "i" to search case-insensitive
+    const searchQuery = query || searchText // use the passed query or fallback to searchText
+    const regex = new RegExp(searchQuery, "i") // "i" to search case-insensitive
     return allPrompts.filter(
       (item) =>
         regex.test(item.creator.username) ||
         regex.test(item.tag) ||
         regex.test(item.prompt)
-    );
-  };
+    )
+  }
 
   // handle search
   const handleSearchChange = (e) => {
-    clearTimeout(searchTimeout);
-    setSearchText(e.target.value);
+    clearTimeout(searchTimeout)
+    setSearchText(e.target.value)
     // debounce method
     setSearchTimeout(
       setTimeout(() => {
-        const searchResult = filterPrompts();
-        setSearchedResults(searchResult);
+        const searchResult = filterPrompts()
+        setSearchedResults(searchResult)
       }, 100)
-    );
-  };
+    )
+  }
 
   const handleTagClick = (tagName) => {
-    setSearchText(tagName);
+    setSearchText(tagName)
 
-    const searchResult = filterPrompts(tagName);
-    setSearchedResults(searchResult);
-  };
+    const searchResult = filterPrompts(tagName)
+    setSearchedResults(searchResult)
+  }
 
   return (
     <section className="feed">
@@ -95,7 +113,7 @@ const Feed = () => {
         <PromptCardList data={allPrompts} handleTagClick={handleTagClick} />
       )}
     </section>
-  );
-};
+  )
+}
 
-export default Feed;
+export default Feed
