@@ -35,9 +35,7 @@ const MyProfile = () => {
 
         const filteredPrompts = prompts.filter((p) => p._id !== prompt._id)
         setPrompts(filteredPrompts)
-      } catch (error) {
-        console.log(error)
-      }
+      } catch (error) {}
     }
   }
 

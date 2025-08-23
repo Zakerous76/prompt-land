@@ -1,12 +1,11 @@
-"use client";
-import { signOut, useSession } from "next-auth/react";
-import Link from "next/link";
-import React from "react";
+"use client"
+import { signOut, useSession } from "next-auth/react"
+import Link from "next/link"
+import React from "react"
 
 const Footer = () => {
-  const { data: session } = useSession();
-  const isUserLoggedIn = session;
-  console.log(isUserLoggedIn);
+  const { data: session } = useSession()
+  const isUserLoggedIn = session
   return (
     <footer>
       <section className="bg-gray-100 opacity-50 pt-1 mt-10">
@@ -53,7 +52,7 @@ const Footer = () => {
                       signOut({
                         callbackUrl: "http://localhost:3000/",
                         redirect: false,
-                      });
+                      })
                       // A commit
                     }}
                     className="text-xs leading-6 text-gray-700 hover:text-gray-900  hover:font-bold"
@@ -148,7 +147,7 @@ const Footer = () => {
         </div>
       </section>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

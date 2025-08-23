@@ -7,8 +7,6 @@ import { signIn, signOut, useSession, getProviders } from "next-auth/react"
 const Nav = () => {
   // for the current user
   const { data: session, status } = useSession()
-  console.log("session:", session)
-  console.log("use session nav:", session)
   const [renderCounter, setRenderCounter] = useState(1)
 
   // useEffect(() => {

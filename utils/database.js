@@ -1,12 +1,12 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 
-let isConnected = false; // track the connection
+let isConnected = false // track the connection
 
 export const connectToDB = async () => {
-  mongoose.set("strictQuery", true); // to mitigate console warnings
+  mongoose.set("strictQuery", true) // to mitigate console warnings
   if (isConnected) {
-    console.log("MongoDB is already connected");
-    return;
+    console.log("MongoDB is already connected")
+    return
   }
 
   try {
@@ -15,11 +15,11 @@ export const connectToDB = async () => {
       // deprecated
       // useNewUrlParser: true,
       // useUnifiedTopology: true,
-    });
+    })
 
-    isConnected = true;
-    console.log("MongoDB connected");
+    isConnected = true
+    console.log("MongoDB connected")
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
