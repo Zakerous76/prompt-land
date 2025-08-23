@@ -1,14 +1,15 @@
-"use client";
-import Link from "next/link";
-import Image from "next/image";
-import { useState, useEffect } from "react";
-import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+"use client"
+import Link from "next/link"
+import Image from "next/image"
+import { useState, useEffect } from "react"
+import { signIn, signOut, useSession, getProviders } from "next-auth/react"
 
 const Nav = () => {
   // for the current user
-  const { data: session, status } = useSession();
-  console.log("use session nav:", session);
-  const [renderCounter, setRenderCounter] = useState(1);
+  const { data: session, status } = useSession()
+  console.log("session:", session)
+  console.log("use session nav:", session)
+  const [renderCounter, setRenderCounter] = useState(1)
 
   // useEffect(() => {
   //   setRenderCounter((prevCounter) => prevCounter + 1);
@@ -21,17 +22,17 @@ const Nav = () => {
   //   }
   // }, [session, status]);
 
-  const [providers, setProviders] = useState(0);
-  const [toggleDropdown, setToggleDropdown] = useState(false);
+  const [providers, setProviders] = useState(0)
+  const [toggleDropdown, setToggleDropdown] = useState(false)
 
   useEffect(() => {
     const fetchAndSetProviders = async () => {
       // gets the configured providers from next-auth route.js
-      const response = await getProviders();
-      setProviders(response);
-    };
-    fetchAndSetProviders();
-  }, []);
+      const response = await getProviders()
+      setProviders(response)
+    }
+    fetchAndSetProviders()
+  }, [])
 
   return (
     <nav
@@ -61,11 +62,11 @@ const Nav = () => {
             <Link
               href="/"
               onClick={() => {
-                setToggleDropdown(false);
+                setToggleDropdown(false)
                 signOut({
                   callbackUrl: "http://localhost:3000/",
                   redirect: true,
-                });
+                })
                 // A commit
               }}
               className="outline_btn"
@@ -140,11 +141,11 @@ const Nav = () => {
                 <button
                   type="button"
                   onClick={() => {
-                    setToggleDropdown(false);
+                    setToggleDropdown(false)
                     signOut({
                       callbackUrl: "http://localhost:3000/",
                       redirect: true,
-                    });
+                    })
                     // A commit
                   }}
                   className="mt-5 w-full black_btn"
@@ -171,7 +172,7 @@ const Nav = () => {
         )}
       </div>
     </nav>
-  );
-};
+  )
+}
 
-export default Nav;
+export default Nav

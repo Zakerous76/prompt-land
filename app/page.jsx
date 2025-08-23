@@ -1,7 +1,7 @@
 // We dont need to import this in NextJS
 // import React from 'react'
 
-import Feed from "@components/Feed";
+import Feed from "@components/Feed"
 
 const Home = () => {
   return (
@@ -9,16 +9,16 @@ const Home = () => {
       <h1 className="head_text text_center">
         Discover and Share
         <br className="max-md:hidden" />
-        <span className="orange_gradient"> AI-Powered Prompt</span>
+        <span className="orange_gradient">AI-Powered Prompt</span>
       </h1>
       <p className="desc text-center">
         PromptLand is an open-source AI tool designed for the modern world,
-        enabling users to discover, create, and share imaginative prompts. Let's
-        Go!!!
+        enabling users to discover, create, and share imaginative prompts.
+        <p className="font-bold">Let&apos;s Go!!!</p>
       </p>
       <Feed />
     </section>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
